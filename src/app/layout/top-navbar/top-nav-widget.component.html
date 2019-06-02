@@ -1,10 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-sm-9 col-lg-10">
+    <span *ngIf="label" class="label label-warning visible-xs-block" style="margin-top: 10px; font-size: 12px; padding: 5px 2px;">{{ label }}</span>
+    <h2>{{setTitle}} <span *ngIf="label" class="label label-warning hidden-xs">{{ label }}</span></h2>
+
+    <ol class="breadcrumb" *ngIf="breadcrumbs && breadcrumbs.length">
+
+      <li *ngFor="let breadcrumb of breadcrumbs; let lastItem = last; let firstItem = first;" [ngClass]="{active: last}">
+
+        <span *ngIf="!lastItem && breadcrumb.navigate">
+          <a (click)="router.navigate(breadcrumb.navigate)">{{breadcrumb.name}}</a>
+        </span>
+
+        <span *ngIf="!lastItem && !breadcrumb.navigate">
+          <ng-container *ngIf="firstItem && breadcrumb.name === 'Home'">
+            <a (click)="router.navigate(['/admin'])">{{breadcrumb.name}}</a>
+          </ng-container>
+          <ng-container *ngIf="!firstItem || breadcrumb.name !== 'Home'">
+            {{breadcrumb.name}}
+          </ng-container>
+        </span>
+
+        <strong *ngIf="lastItem">
+          {{breadcrumb.name}}
+        </strong>
+
+      </li>
+
+    </ol>
+
+  </div>
+
+  <div class="col-sm-3 col-lg-2 m-t-lg text-right hidden-xs">
+    <button *ngIf="allowSave"     class="btn btn-primary" type="button">Save</button>
+    <button *ngIf="allowSettings" class="btn btn-primary" type="button" (click)="settingsPage()"><span class="fa fa-cog"></span> Settings</button>
+    <button *ngIf="allowBackToResults" class="btn btn-default btn-back-to-results" (click)="navigateToPage()" type="button"><span class="fa " [ngClass]="'fa-arrow-left'"></span>Back to Results</button>
+  </div>
+
+  <div class="visible-xs m-t-sm m-b-sm">
+    <button *ngIf="allowSave"     class="btn btn-block btn-primary" type="button">Save</button>
+    <button *ngIf="allowSettings" class="btn btn-block btn-primary" type="button" (click)="settingsPage()"><span class="fa fa-cog"></span> Settings</button>
+  </div>
+
+</div>

@@ -23,9 +23,44 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/animate.css/animate.css",
+              "node_modules/icheck/skins/square/_all.css",
+              "node_modules/font-awesome/css/font-awesome.min.css",
+              "node_modules/metismenu/dist/metisMenu.css",
+              "node_modules/jquery-confirm/dist/jquery-confirm.min.css",
+              "node_modules/datatables.net-bs/css/dataTables.bootstrap.css",
+              "node_modules/datatables.net-buttons-dt/css/buttons.dataTables.min.css",
+              "node_modules/datatables.net-responsive-bs/css/responsive.bootstrap.min.css",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "node_modules/slick-carousel/slick/slick.css",
+              "node_modules/slick-carousel/slick/slick-theme.css",
+              "src/assets/footable/compiled/footable.bootstrap.min.css",
+              "node_modules/lightbox2/dist/css/lightbox.min.css",
+              "node_modules/ngx-ui-switch/ui-switch.component.css",
+              "node_modules/toastr/toastr.scss",
+              "src/assets/css/style.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/icheck/icheck.js",
+              "node_modules/jquery-ui-dist/jquery-ui.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js",
+              "node_modules/metismenu/dist/metisMenu.js",
+              "node_modules/jquery-slimscroll/jquery.slimscroll.min.js",
+              "node_modules/jquery-confirm/dist/jquery-confirm.min.js",
+              "node_modules/datatables.net/js/jquery.dataTables.js",
+              "node_modules/datatables.net-bs/js/dataTables.bootstrap.js",
+              "node_modules/datatables.net-buttons/js/buttons.html5.min.js",
+              "node_modules/datatables.net-buttons/js/dataTables.buttons.min.js",
+              "node_modules/datatables.net-responsive/js/dataTables.responsive.min.js",
+              "node_modules/datatables.net-responsive-bs/js/responsive.bootstrap.min.js",
+              "node_modules/slick-carousel/slick/slick.js",
+              "node_modules/moment/min/moment.min.js",
+              "node_modules/lightbox2/dist/js/lightbox.min.js",
+              "node_modules/toastr/toastr.js"
+            ]
           },
           "configurations": {
             "production": {

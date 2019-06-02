@@ -1,10 +1,206 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<app-top-nav-widget title="Inventory Management" [breadcrumbs]="breadcrumbs"></app-top-nav-widget>
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="wrapper wrapper-content">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="ibox">
+            <div class="ibox-title">
+              <h5>Add New Transaction</h5>
+            </div>
+            <div class="ibox-content">
+              <form [formGroup]="transactionForm">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Bank Account</label>
+                      <select class="form-control" formControlName="bankAccount">
+                        <option value="">- Please select bank account -</option>
+                        <option *ngFor="let account of accountOptions" [value]="account.id">
+                          {{account.account_name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Date</label>
+                      <input class="form-control default_datepicker"
+                             bsDatepicker
+                             [bsConfig]="bsConfig"
+                             id="transaction_date"
+                             placeholder="dd/mm/yyyy"
+                             formControlName="transactionDate">
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="transaction_amount">Amount</label>
+                      <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <input type="number"
+                               id="transaction_amount"
+                               class="form-control"
+                               aria-label="Amount (to the nearest dollar)"
+                               formControlName="transactionAmount">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Transaction Type</label>
+                      <select class="form-control" formControlName="transactionType">
+                        <option value="">- Choose an options -</option>
+                        <option value="income">Income</option>
+                        <option value="expense">Expense</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Is Fixed?</label>
+                      <select class="form-control" formControlName="isFixed">
+                        <option value="">- Choose an option -</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Category</label>
+                      <select class="form-control" formControlName="transactionCategory">
+                        <option value="">- Please select transaction category -</option>
+                        <option *ngFor="let category of transactionCategoryOptions" [value]="category.id">
+                          {{category.description}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xs-12">
+                    <div class="text-right">
+                      <button type="button" class="btn"
+                              [ngClass]="{
+                                'btn-primary': transactionForm?.valid,
+                                'btn-danger': !transactionForm?.valid
+                              }" (click)="addTransaction()">
+                        Add Transaction
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="col-lg-8">
+          <div class="ibox">
+            <div class="ibox-title">
+              <h5>Transactions</h5>
+            </div>
+            <div class="ibox-content">
+              <div class="wrapper">
+                <table class="table table-striped" id="transaction-table">
+                  <thead>
+                    <tr>
+                      <th>Bank Account</th>
+                      <th>Type</th>
+                      <th>Category</th>
+                      <th>Is Fixed</th>
+                      <th class="col-transaction-date">Transaction Date</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let transaction of transactions; trackBy: trackByFn">
+                      <td>{{transaction.account_name}}</td>
+                      <td>{{transaction.transaction_type}}</td>
+                      <td>{{transaction.transaction_category}}</td>
+                      <td><i *ngIf="transaction.is_fixed" class="fa fa-check"></i></td>
+                      <td>{{transaction.transaction_date | date: 'yyyy/MM/dd'}}</td>
+                      <td>{{transaction.amount}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3 col-md-6">
+          <div class="ibox">
+            <div class="ibox-content">
+              <h5>YTD Income</h5>
+              <h1 class="no-margins">{{totalYearIncome|currency:'AUD':'symbol-narrow'}}</h1>
+              <small>Total income</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="ibox">
+            <div class="ibox-content">
+              <h5>YTD Expense</h5>
+              <h1 class="no-margins">{{totalYearExpense|currency:'AUD':'symbol-narrow'}}</h1>
+              <small>Total expense</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="ibox">
+            <div class="ibox-content">
+              <h5>Month Income</h5>
+              <h1 class="no-margins">{{totalMonthIncomes[currentMonthNum]|currency:'AUD':'symbol-narrow'}}</h1>
+              <small>Total income</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="ibox">
+            <div class="ibox-content">
+              <h5>Month Expense</h5>
+              <h1 class="no-margins">{{totalMonthExpenses[currentMonthNum]|currency:'AUD':'symbol-narrow'}}</h1>
+              <small>Total expense</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-3 col-md-6">
+          <div class="ibox">
+            <div class="ibox-content">
+              <h5>Daehwa Salary YTD Income</h5>
+              <h1 class="no-margins">{{getDsSalaryTotal|currency:'AUD':'symbol-narrow'}}</h1>
+              <small>Total Daehwa's Salary Income</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="ibox">
+            <div class="ibox-content">
+              <h5>Yeeil Salary YTD Income</h5>
+              <h1 class="no-margins">{{getYiSalaryTotal|currency:'AUD':'symbol-narrow'}}</h1>
+              <small>Total Yeeil's Salary Income</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <div class="ibox">
+            <div class="ibox-content">
+              <h5>PlusToken YTD Income</h5>
+              <h1 class="no-margins">{{getPtTotal|currency:'AUD':'symbol-narrow'}}</h1>
+              <small>Total PlusToken Income</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

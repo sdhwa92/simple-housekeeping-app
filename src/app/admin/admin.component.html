@@ -1,0 +1,14 @@
+<div id="wrapper">
+  <div id="ds_dashboard">
+    <div id="ds_dashboard_area">
+      <app-sidebar-navigation class="navbar-default navbar-static-side animated" #sidebar></app-sidebar-navigation>
+      <app-sidebar-backdrop></app-sidebar-backdrop>
+      <div id="page-wrapper" class="gray-bg" #pageWrapper>
+        <app-top-navbar></app-top-navbar>
+        <div id="ds_main_content">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

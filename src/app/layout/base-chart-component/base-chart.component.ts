@@ -1,13 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 /*Models*/
-import { ChartDataConfigModel } from '../models/chart-config.model';
+import { ChartDataConfigModel } from '../../models/chart-config.model';
 
 @Component({
   selector: 'app-base-chart',
-  template: `
-    <canvas baseChart [datasets]="{{chartData}}"></canvas>
-  `
+  templateUrl: 'base-chart.component.html'
 })
 export class BaseChartComponent implements OnInit {
   @Input() chartlabels;
@@ -15,6 +13,10 @@ export class BaseChartComponent implements OnInit {
   @Input() chartLegend = true;
   @Input() chartData: ChartDataConfigModel[];
 
+  public chartOptions = {
+    scaleShowVerticalLines: false,
+    responsive: true
+  };
   constructor() {}
 
   ngOnInit(): void {

@@ -21,10 +21,8 @@
               <h5>Income and Expenses</h5>
             </div>
             <div class="ibox-content">
-              <div>
-                <div *ngIf="incomesEachMonth && expensesEachMonth" style="display: block">
-                </div>
-              </div>
+              <!--Container to put bar chart component-->
+              <ng-template #monthIncomeAndExpenseChart></ng-template>
             </div>
           </div>
         </div>
